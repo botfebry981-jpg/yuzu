@@ -3,37 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Mode</title>
     <link rel="stylesheet" href="beranda.css">
 </head>
 <body>
-    <div class="admin-beranda">
-        <div class="top-bar">
-            <span>Admin Mode</span>
-            <div class="indicator"></div>
-        </div>
-        
-        <div id="admin-feed-container">
-            <div class="skeleton">Menyinkronkan data...</div>
-        </div>
+    <div class="admin-header">Admin Mode</div>
+    
+    <div id="main-feed">
+        <p class="status-msg">Memuat aktivitas terbaru...</p>
     </div>
 
     <script src="beranda.js"></script>
 </body>
 </html>
-    const BOT_TOKEN = "7282402921:AAEv0r2LDNGDTp-__LwbyzQ3cLJ6Ns2Px6w";
-
-    // Fungsi mengambil URL File asli (Foto)
-    async function getTelegramFile(fileId) {
-        try {
-            const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${fileId}`);
-            const json = await res.json();
-            if(json.ok) {
-                return `https://api.telegram.org/file/bot${BOT_TOKEN}/${json.result.file_path}`;
-            }
-        } catch (e) { return null; }
-    }
-
-    async function refreshFeed() {
         const feedContainer = document.getElementById('main-feed');
         try {
             // Mengambil data terbaru dari channel
