@@ -32,22 +32,27 @@
     </div>
 
     <nav class="bottom-nav">
-        <button class="nav-btn" id="nav-dashboard" onclick="gantiMenu('dashboard')">
-            <i class="fa-solid fa-chart-line"></i><span>Dashboard</span>
-        </button>
-        <button class="nav-btn" id="nav-bot" onclick="gantiMenu('daftar-bot')">
-            <i class="fa-solid fa-robot"></i><span>Daftar Bot</span>
-        </button>
-        <button class="nav-btn nav-btn-center" id="nav-beranda" onclick="gantiMenu('beranda')">
-            <i class="fa-solid fa-house"></i><span>Beranda</span>
-        </button>
-        <button class="nav-btn" onclick="window.location.href='upload.html'">
-            <i class="fa-solid fa-cloud-arrow-up"></i><span>Upload</span>
-        </button>
-        <button class="nav-btn" onclick="document.getElementById('itModalGateway').style.display='flex'">
-            <i class="fa-solid fa-code"></i><span>Ruang IT</span>
-        </button>
-    </nav>
+    <button class="nav-btn" id="nav-dashboard" onclick="window.location.href='index.html'">
+        <i class="fa-solid fa-chart-line"></i><span>Dashboard</span>
+    </button>
+
+    <button class="nav-btn" id="nav-bot" onclick="window.location.href='admin.html'">
+        <i class="fa-solid fa-robot"></i><span>Daftar Bot</span>
+    </button>
+
+    <button class="nav-btn nav-btn-center" id="nav-beranda" onclick="window.location.href='beranda.html'">
+        <i class="fa-solid fa-house"></i><span>Beranda</span>
+    </button>
+
+    <button class="nav-btn" onclick="window.location.href='upload.html'">
+        <i class="fa-solid fa-cloud-arrow-up"></i><span>Upload</span>
+    </button>
+
+    <button class="nav-btn" onclick="document.getElementById('itModalGateway').style.display='flex'">
+        <i class="fa-solid fa-code"></i><span>Ruang IT</span>
+    </button>
+</nav>
+
 
     <script src="admin.js"></script>
 </body>
