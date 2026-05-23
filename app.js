@@ -54,22 +54,27 @@ function prosesValidasiLogin(role, password) {
     if (role === 'admin') {
         if (password === '4567') {
             tg.showAlert("Login Berhasil sebagai Admin!");
+            window.location.href = 'admin.html';
         } else {
-            errorMsg.style.display = 'block'; 
+            errorMsg.style.display = 'block';
         }
-    } 
+    }
     else if (role === 'it') {
         if (password === '7654') {
             tg.showAlert("Login Berhasil sebagai Tim IT!");
+            window.location.href = 'it.html';
         } else {
-            errorMsg.style.display = 'block'; 
+            errorMsg.style.display = 'block';
         }
-    } 
+    }
     else if (role === 'user') {
         const nama = userNameInput.value;
         tg.showAlert(`Selamat datang di aplikasi, ${nama}!`);
+        window.location.href = 'user.html';
     }
 }
+
+
 
 
 // ========================================================
