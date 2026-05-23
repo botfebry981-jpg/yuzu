@@ -3,37 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feed Channel @vvttyyaa</title>
+    <title>Beranda Mini App</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #e6ecf0; margin: 0; padding: 10px; }
-        .container { max-width: 500px; margin: auto; }
-        .header { background: #ffffff; padding: 15px; border-radius: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 15px; text-align: center; border-bottom: 3px solid #0088cc; }
-        .card { background: #fff; border-radius: 15px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .img-box img { width: 100%; height: auto; display: block; background: #f8f9fa; }
-        .video-box { width: 100%; aspect-ratio: 16/9; background: #000; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; flex-direction: column; gap: 10px; }
-        .btn-play { padding: 8px 16px; background: #0088cc; color: white; border-radius: 20px; text-decoration: none; font-size: 12px; }
-        .content { padding: 15px; }
-        .text { font-size: 14px; line-height: 1.5; color: #14171a; white-space: pre-wrap; margin-bottom: 10px; }
-        .time { font-size: 11px; color: #657786; display: block; border-top: 1px solid #f0f0f0; padding-top: 8px; }
+        body { background: #f0f2f5; margin: 0; padding: 10px; padding-bottom: 80px; font-family: sans-serif; }
+        .feed-wrapper { max-width: 500px; margin: auto; }
+        
+        /* Card Postingan */
+        .post-card { background: #fff; border-radius: 12px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .post-media img { width: 100%; height: auto; display: block; background: #eee; }
+        .post-content { padding: 12px; }
+        .post-text { font-size: 14px; color: #222; line-height: 1.5; margin-bottom: 10px; white-space: pre-wrap; }
+        .post-date { font-size: 11px; color: #999; border-top: 1px solid #f5f5f5; padding-top: 8px; display: block; }
+        
+        /* Loading & Error */
+        .loader { text-align: center; padding: 40px; color: #0088cc; font-weight: bold; }
+        .video-box { width: 100%; aspect-ratio: 16/9; background: #000; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-direction: column; gap: 8px; }
+        .btn-tg { padding: 6px 12px; background: #0088cc; color: #fff; border-radius: 15px; text-decoration: none; font-size: 11px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h3 style="margin:0; color: #0088cc;">📢 @vvttyyaa Updates</h3>
-    </div>
-    <div id="feed">
-        <div style="text-align:center; padding:30px; color:#657786;">Menghubungkan ke channel...</div>
-    </div>
+<div class="feed-wrapper" id="main-feed">
+    <div class="loader">Menyinkronkan dengan Channel @vvttyyaa...</div>
 </div>
 
 <script>
-    const TOKEN = "7282402921:AAEv0r2LDNGDTp-__LwbyzQ3cLJ6Ns2Px6w";
+    // Pastikan Telegram WebApp terdeteksi
+    const webApp = window.Telegram.WebApp;
+    webApp.ready();
 
-    // Fungsi untuk mendapatkan URL gambar asli dari Telegram
-    async function getFilePath(fileId) {
+    const BOT_TOKEN = "7282402921:AAEv0r2LDNGDTp-__LwbyzQ3cLJ6Ns2Px6w";
+
+    // Fungsi mengambil URL File asli (Foto)
+    async function getTelegramFile(fileId) {
         try {
+            const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${fileId}`);
+            const json = await res.json();
+            if(json.ok) {
+                return `https://api.telegram.org/file/bot${BOT_TOKEN}/${json.result.file_path}`;
+            }
+        } catch (e) { return null; }
+    }
+
+    async function refreshFeed() {
+        const feedContainer = document.getElementById('main-feed');
+        try {
+            // Mengambil data terbaru dari channel
+            const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=-10`);
+            const data = await response.json();
+
+            if (data.ok && data.result.length > 0) {
+                feedContainer.innerHTML = '';
+                const updates = data.result.reverse();
+
+                for (let item of updates) {
+                    const post = item.channel_post || item.message;
+                    if (!post) continue;
+
+                    let mediaHtml = '';
+                    let caption = post.text || post.caption || "";
+
+                    // Menangani Foto Asli
+                    if (post.photo) {
+                        const fileId = post.photo[post.photo.length - 1].file_id;
+                        const imgUrl = await getTelegramFile(fileId);
+                        mediaHtml = `<div class="post-media"><img src="${imgUrl}"></div>`;
+                    } 
+                    // Menangani Video
+                    else if (post.video) {
+                        mediaHtml = `
+                            <div class="video-box">
+                                📹 Konten Video
+                                <a href="https://t.me/vvttyyaa" class="btn-tg">Buka di Telegram</a>
+                            </div>`;
+                    }
+
+                    if (caption || mediaHtml) {
+                        feedContainer.innerHTML += `
+                            <div class="post-card">
+                                ${mediaHtml}
+                                <div class="post-content">
+                                    ${caption ? `<div class="post-text">${caption}</div>` : ''}
+                                    <span class="post-date">${new Date(post.date * 1000).toLocaleString('id-ID')}</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+            } else {
+                feedContainer.innerHTML = '<div class="loader" style="color:#999;">Belum ada postingan baru di channel.</div>';
+            }
+        } catch (err) {
+            feedContainer.innerHTML = '<div class="loader" style="color:red;">Koneksi Gagal. Periksa Token Bot Anda.</div>';
+        }
+    }
+
+    // Jalankan awal
+    refreshFeed();
+    // Auto-update setiap 20 detik agar hemat kuota
+    setInterval(refreshFeed, 20000);
+</script>
+</body>
+</html>
             const res = await fetch(`https://api.telegram.org/bot${TOKEN}/getFile?file_id=${fileId}`);
             const data = await res.json();
             if(data.ok) {
