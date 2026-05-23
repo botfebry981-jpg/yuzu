@@ -3,37 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beranda Mini App</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body { background: #f0f2f5; margin: 0; padding: 10px; padding-bottom: 80px; font-family: sans-serif; }
-        .feed-wrapper { max-width: 500px; margin: auto; }
-        
-        /* Card Postingan */
-        .post-card { background: #fff; border-radius: 12px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .post-media img { width: 100%; height: auto; display: block; background: #eee; }
-        .post-content { padding: 12px; }
-        .post-text { font-size: 14px; color: #222; line-height: 1.5; margin-bottom: 10px; white-space: pre-wrap; }
-        .post-date { font-size: 11px; color: #999; border-top: 1px solid #f5f5f5; padding-top: 8px; display: block; }
-        
-        /* Loading & Error */
-        .loader { text-align: center; padding: 40px; color: #0088cc; font-weight: bold; }
-        .video-box { width: 100%; aspect-ratio: 16/9; background: #000; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-direction: column; gap: 8px; }
-        .btn-tg { padding: 6px 12px; background: #0088cc; color: #fff; border-radius: 15px; text-decoration: none; font-size: 11px; }
-    </style>
+    <link rel="stylesheet" href="beranda.css">
 </head>
 <body>
+    <div class="admin-beranda">
+        <div class="top-bar">
+            <span>Admin Mode</span>
+            <div class="indicator"></div>
+        </div>
+        
+        <div id="admin-feed-container">
+            <div class="skeleton">Menyinkronkan data...</div>
+        </div>
+    </div>
 
-<div class="feed-wrapper" id="main-feed">
-    <div class="loader">Menyinkronkan dengan Channel @vvttyyaa...</div>
-</div>
-
-<script>
-    // Pastikan Telegram WebApp terdeteksi
-    const webApp = window.Telegram.WebApp;
-    webApp.ready();
-
+    <script src="beranda.js"></script>
+</body>
+</html>
     const BOT_TOKEN = "7282402921:AAEv0r2LDNGDTp-__LwbyzQ3cLJ6Ns2Px6w";
 
     // Fungsi mengambil URL File asli (Foto)
