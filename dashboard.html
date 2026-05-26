@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Dashboard</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <div class="header">
+        <h1>Dashboard Analitik</h1>
+        <p>Pantau performa dan aktivitas bot kamu</p>
+    </div>
+
+    <div class="content">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="avatar" id="user-avatar">👤</div>
+                <div class="profile-info">
+                    <h3 id="user-name">Memuat...</h3>
+                    <p id="user-username">@username</p>
+                </div>
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    Online
+                </div>
+            </div>
+            <div class="profile-details">
+                <div class="detail-item">
+                    <span class="detail-label">ID Telegram</span>
+                    <span class="detail-value" id="user-id">-</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">No. Ponsel</span>
+                    <span class="detail-value warning" id="user-phone">Butuh izin bot</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <div class="card-header">
+                <h4>📈 User Masuk Harian</h4>
+                <span class="trend positive">▲ 12% minggu ini</span>
+            </div>
+            <div class="chart-container">
+                <canvas id="statistikChart"></canvas>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">👆</div>
+                <div class="stat-content">
+                    <span class="stat-label">Total Klik</span>
+                    <span class="stat-number" id="stat-klik">1,240</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📁</div>
+                <div class="stat-content">
+                    <span class="stat-label">File Diunggah</span>
+                    <span class="stat-number">84</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🤖</div>
+                <div class="stat-content">
+                    <span class="stat-label">Bot Aktif</span>
+                    <span class="stat-number">8</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💬</div>
+                <div class="stat-content">
+                    <span class="stat-label">Total Chat</span>
+                    <span class="stat-number">12.4K</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="rumah.html" class="nav-item">
+            <div class="icon-wrapper"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg></div>
+            <span class="nav-label">RUMAH</span>
+        </a>
+        <a href="bot.html" class="nav-item">
+            <div class="icon-wrapper"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 022 2zM9 9h6v6H9V9z"></path></svg></div>
+            <span class="nav-label">BOT</span>
+        </a>
+        <a href="unggah.html" class="nav-item">
+            <div class="icon-wrapper"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></div>
+            <span class="nav-label">UNGGAH</span>
+        </a>
+        <a href="dashboard.html" class="nav-item active">
+            <div class="icon-wrapper"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg></div>
+            <span class="nav-label">DASH</span>
+        </a>
+        <a href="it.html" class="nav-item">
+            <div class="icon-wrapper"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
+            <span class="nav-label">IT</span>
+        </a>
+    </nav>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

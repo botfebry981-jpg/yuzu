@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unggah - Studio IT</title>
+    <link rel="stylesheet" href="unggah.css">
+</head>
+<body>
+
+<div class="header">
+    <h1>Studio Unggah</h1>
+    <p>Upload file dengan cepat dan aman</p>
+</div>
+
+<div class="content">
+    <div class="upload-card">
+        <div class="upload-icon">📤</div>
+        <p id="file-status">Pilih jenis file yang ingin diunggah</p>
+
+        <input type="file" id="input-media" hidden accept="image/*,video/*">
+        <input type="file" id="input-bot" hidden accept=".js,.zip,.json,.html">
+
+        <button id="btn-media" class="btn-main btn-gradient">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            Unggah Foto / Video
+        </button>
+
+        <button id="btn-bot" class="btn-main btn-outline">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 022 2zM9 9h6v6H9V9z"/>
+            </svg>
+            Unggah API Bot Baru
+        </button>
+
+        <div class="file-info">
+            Format didukung: JPG, MP4, JS, ZIP, HTML
+        </div>
+    </div>
+</div>
+
+<nav class="bottom-nav">
+    <a href="rumah.html" class="nav-item">
+        <div class="icon-wrapper"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg></div>
+        <span>RUMAH</span>
+    </a>
+    <a href="bot.html" class="nav-item">
+        <div class="icon-wrapper"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 022 2zM9 9h6v6H9V9z"></path></svg></div>
+        <span>BOT</span>
+    </a>
+    <a href="unggah.html" class="nav-item active">
+        <div class="icon-wrapper"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg></div>
+        <span>UNGGAH</span>
+    </a>
+    <a href="dashboard.html" class="nav-item">
+        <div class="icon-wrapper"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg></div>
+        <span>DASH</span>
+    </a>
+    <a href="it.html" class="nav-item">
+        <div class="icon-wrapper"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
+        <span>IT</span>
+    </a>
+</nav>
+
+<script src="unggah.js"></script>
+</body>
+</html>
