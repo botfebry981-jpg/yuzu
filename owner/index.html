@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Dashboard - Telegram Mini App</title>
+    <!-- Tailwind CSS untuk Styling Cepat & Dark Mode -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Chart.js untuk Membuat Grafik -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #121214;
+            color: #e1e1e6;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+    </style>
+</head>
+<body class="p-4 bg-[#121214] text-gray-200">
+
+    <!-- Header Dashboard -->
+    <header class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between border-b border-gray-800 pb-4">
+        <div>
+            <h1 class="text-xl font-bold text-orange-500 flex items-center gap-2">
+                <span>🟠</span> Enterprise Dashboard
+            </h1>
+            <p class="text-xs text-gray-400 mt-1">Sistem Pemantauan Infrastruktur Real-time</p>
+        </div>
+        <div class="mt-3 md:mt-0 flex gap-2">
+            <button onclick="location.reload()" class="bg-gray-800 hover:bg-gray-700 text-xs px-3 py-1.5 rounded text-gray-300 transition border border-gray-700">
+                🔄 Refresh
+            </button>
+            <span class="bg-emerald-950 text-emerald-400 text-xs px-3 py-1.5 rounded font-mono border border-emerald-800 flex items-center">
+                ● Connected to Telegram
+            </span>
+        </div>
+    </header>
+
+    <!-- Grid Konten Utama (Mirip Layout Komponen Gambar 1002768615.png) -->
+    <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+        <!-- Panel 1: Rack Units Fragmentation (Bar Chart) -->
+        <div class="bg-[#1e1e24] p-4 rounded-lg border border-gray-800 shadow-lg lg:col-span-2">
+            <div class="flex justify-between items-center mb-3">
+                <h2 class="text-sm font-semibold text-gray-300">Rack Units Fragmentation</h2>
+                <span class="text-[10px] bg-gray-800 px-2 py-0.5 rounded text-gray-400">Limit to Top 10</span>
+            </div>
+            <div class="h-64">
+                <canvas id="barChart1"></canvas>
+            </div>
+        </div>
+
+        <!-- Panel 2: Floor Space Remaining (Gauge/Donut Chart) -->
+        <div class="bg-[#1e1e24] p-4 rounded-lg border border-gray-800 shadow-lg flex flex-col justify-between">
+            <h2 class="text-sm font-semibold text-gray-300 mb-2">Floor Space Remaining</h2>
+            <div class="relative flex flex-col items-center justify-center my-auto">
+                <div class="w-44 h-44">
+                    <canvas id="gaugeChart1"></canvas>
+                </div>
+                <!-- Angka Indikator di Tengah -->
+                <div class="absolute text-center mt-4">
+                    <span class="text-3xl font-bold text-white block">3</span>
+                    <span class="text-[10px] text-gray-400 uppercase tracking-wider">Remaining</span>
+                </div>
+            </div>
+            <div class="text-center text-xs text-gray-500 border-t border-gray-800 pt-2 mt-2">
+                Status: Include Planned
+            </div>
+        </div>
+
+        <!-- Panel 3: Rack Units Usage By Rail (Stacked Bar Chart) -->
+        <div class="bg-[#1e1e24] p-4 rounded-lg border border-gray-800 shadow-lg lg:col-span-2">
+            <h2 class="text-sm font-semibold text-gray-300 mb-3">Rack Units Usage By Rail</h2>
+            <div class="h-64">
+                <canvas id="stackedBarChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Panel 4: Cabinet Space Remaining -->
+        <div class="bg-[#1e1e24] p-4 rounded-lg border border-gray-800 shadow-lg flex flex-col justify-between">
+            <h2 class="text-sm font-semibold text-gray-300 mb-2">Cabinet Space Remaining</h2>
+            <div class="relative flex flex-col items-center justify-center my-auto">
+                <div class="w-44 h-44">
+                    <canvas id="gaugeChart2"></canvas>
+                </div>
+                <div class="absolute text-center mt-4">
+                    <span class="text-2xl font-bold text-white block">2,083</span>
+                    <span class="text-[10px] text-gray-400 uppercase tracking-wider">Rack Units</span>
+                </div>
+            </div>
+            <div class="text-center text-xs text-gray-500 border-t border-gray-800 pt-2 mt-2">
+                Total Capacity: 4,584.0
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Status -->
+    <footer class="mt-8 text-center text-[11px] text-gray-600">
+        &copy; 2026 dcTrack Infrastructure Dashboard Mod. Built for Telegram Mini App.
+    </footer>
+
+    <!-- Logika Inisialisasi Grafik menggunakan Chart.js -->
+    <script>
+        // Batasan warna tema dark dari gambar
+        const gridColor = '#2a2a30';
+        const textColor = '#9ca3af';
+
+        // 1. Grafik Batang: Rack Units Fragmentation
+        new Chart(document.getElementById('barChart1'), {
+            type: 'bar',
+            data: {
+                labels: ['02', '03', '04', '05', '06', '07', '08', '09', '10', '11'],
+                datasets: [{
+                    label: 'Potential Items',
+                    data: [922, 562, 399, 303, 241, 200, 173, 143, 120, 98],
+                    backgroundColor: [
+                        '#3182ce', '#63b3ed', '#dd6b20', '#b7791f', 
+                        '#2f855a', '#38a169', '#9b2c2c', '#e53e3e', '#553c9a', '#718096'
+                    ],
+                    borderWidth: 0,
+                    borderRadius: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { color: gridColor }, ticks: { color: textColor } },
+                    y: { grid: { color: gridColor }, ticks: { color: textColor } }
+                }
+            }
+        });
+
+        // 2. Grafik Setengah Lingkaran: Floor Space Remaining
+        new Chart(document.getElementById('gaugeChart1'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Used', 'Warning', 'Free'],
+                datasets: [{
+                    data: [65, 15, 20],
+                    backgroundColor: ['#2f855a', '#b7791f', '#9b2c2c'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                rotation: -90,
+                circumference: 180,
+                plugins: { legend: { display: false } },
+                cutout: '75%'
+            }
+        });
+
+        // 3. Grafik Stacked Bar: Rack Units Usage By Rail
+        new Chart(document.getElementById('stackedBarChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Back Rails', 'Either Rails', 'Front Rails'],
+                datasets: [
+                    {
+                        label: 'Busy',
+                        data: [2500, 2500, 2100],
+                        backgroundColor: '#2b6cb0'
+                    },
+                    {
+                        label: 'Free',
+                        data: [2100, 2100, 2400],
+                        backgroundColor: '#4a5568'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: textColor } } },
+                scales: {
+                    x: { stacked: true, grid: { display: false }, ticks: { color: textColor } },
+                    y: { stacked: true, grid: { color: gridColor }, ticks: { color: textColor } }
+                }
+            }
+        });
+
+        // 4. Grafik Setengah Lingkaran: Cabinet Space Remaining
+        new Chart(document.getElementById('gaugeChart2'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Safe', 'Caution', 'Critical'],
+                datasets: [{
+                    data: [55, 30, 15],
+                    backgroundColor: ['#38a169', '#d69e2e', '#e53e3e'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                rotation: -90,
+                circumference: 180,
+                plugins: { legend: { display: false } },
+                cutout: '75%'
+            }
+        });
+    </script>
+</body>
+</html>
